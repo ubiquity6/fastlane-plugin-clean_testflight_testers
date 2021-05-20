@@ -45,7 +45,7 @@ module Fastlane
           else
             # We don't really have a good way to detect whether the user is active unfortunately
             # So we can just delete users that had no sessions
-            if days_since_status_change > params[:days_of_inactivity] && tester_metrics.session_count && tester_metrics.session_count == 0
+            if days_since_status_change > params[:days_of_inactivity] && tester_metrics.session_count == 0
               # User had no sessions in the last e.g. 30 days, let's get rid of them
               remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_#{params[:days_of_inactivity]}_DAYS_0_SESSIONS")
               counter += 1
@@ -53,11 +53,11 @@ module Fastlane
               # User has a build that is too old, let's get rid of them
               remove_tester(current_tester, spaceship_app, params[:dry_run], "BUILD_VERSION_OLDER_THAN_#{params[:oldest_build_allowed]}")
               counter += 1
-            elsif days_since_status_change > 21 && tester_metrics.session_count && tester_metrics.session_count < 10
-              remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_3_WEEKS_FEWER_THAN_10_SESSIONS")
+            elsif days_since_status_change > params[:days_of_inactivity] && tester_metrics.session_count < 10
+              remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_#{params[:days_of_inactivity]}_DAYS_FEWER_THAN_10_SESSIONS")
               counter += 1
-            elsif days_since_status_change > 35 && tester_metrics.session_count && tester_metrics.session_count < 20
-              remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_5_WEEKS_FEWER_THAN_20_SESSIONS")
+            elsif days_since_status_change > (params[:days_of_inactivity] + 14) && tester_metrics.session_count < 20
+              remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_#{params[:days_of_inactivity] + 14}_DAYS_FEWER_THAN_20_SESSIONS")
               counter += 1
             end
           end
