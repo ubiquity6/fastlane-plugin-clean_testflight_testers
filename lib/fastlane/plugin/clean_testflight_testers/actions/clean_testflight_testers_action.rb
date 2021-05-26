@@ -53,10 +53,10 @@ module Fastlane
               # User has a build that is too old, let's get rid of them
               remove_tester(current_tester, spaceship_app, params[:dry_run], "BUILD_VERSION_OLDER_THAN_#{params[:oldest_build_allowed]}")
               counter += 1
-            elsif days_since_status_change > params[:days_of_inactivity] && tester_metrics.session_count < 10
+            elsif days_since_status_change > params[:days_of_inactivity] && !tester_metrics.session_count.nil? && tester_metrics.session_count < 10
               remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_#{params[:days_of_inactivity]}_DAYS_FEWER_THAN_10_SESSIONS")
               counter += 1
-            elsif days_since_status_change > (params[:days_of_inactivity] + 14) && tester_metrics.session_count < 20
+            elsif days_since_status_change > (params[:days_of_inactivity] + 14) && !test_metrics.session_count.nil? && tester_metrics.session_count < 20
               remove_tester(current_tester, spaceship_app, params[:dry_run], "#{tester_metrics.beta_tester_state}_FOR_#{params[:days_of_inactivity] + 14}_DAYS_FEWER_THAN_20_SESSIONS")
               counter += 1
             end
