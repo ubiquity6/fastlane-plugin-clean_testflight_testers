@@ -2,6 +2,12 @@
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-clean_testflight_testers)
 
+## Backyard-specific Modifcations
+
+- Add reason for deletion in the log
+- Add new deletion criteria
+- Change the oldest_build_allowed param to compare against build number instead of build version.
+
 ## Getting Started
 
 This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-clean_testflight_testers`, add it to your project by running:
